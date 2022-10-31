@@ -1,2 +1,1 @@
-# AirBnB-Clone
-This Is Back- End Related Project
+# bnb_clone

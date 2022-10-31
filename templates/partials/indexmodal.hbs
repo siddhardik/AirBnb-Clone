@@ -1,0 +1,101 @@
+<div class="modal_container hidden">
+
+    <!-- login modal -->
+    <div class="modal_content hidden" id="login_modal_container">
+        <div class="form px-4 pt-5">
+
+            <form action="/user/login" class="modal-form" method="post">
+                <div>
+                    <h2 style="color: #fff;">Login to your account:-</h2>
+                </div>
+                <input type="text" name="username" class="form-control" placeholder="Username" autocomplete="off" required>
+
+                <input type="password" name="password" class="form-control" placeholder="Password" required>
+                <button class="btn" type="submit">Login</button>
+            </form>
+
+        </div>
+    </div>
+
+    <!-- signup modal -->
+    <div class="modal_content hidden" id="signup_modal_container">
+        <div class="form px-4">
+            <form action="/user/signup" id="signup_form" class="modal-form" method="post" enctype="multipart/form-data">
+                <div>
+                    <h2>User Registration:-</h2>
+                </div>
+
+                <input type="text" name="username" class="form-control" placeholder="Username" required>
+
+                <input type="text" name="fName" class="form-control" placeholder="First name" required>
+                <input type="text" name="mName" class="form-control" placeholder="Middle name">
+                <input type="text" name="lName" class="form-control" placeholder="Last name" required>
+
+                {{!-- <label for="usertype">User type:</label>
+                <select name="usertype" id="usertype" required>
+                    <option value="guest" selected>Guest</option>
+                    <option value="host">Host</option>
+                </select> --}}
+
+                <input type="text" name="country" class="form-control" placeholder="Country" required>
+
+                <input type="text" name="city" class="form-control" placeholder="City" required>
+                <label>Please select your gender:</label><br>
+                <input type="radio" name="gender" id="male" value="Male" required>
+                <label for="male">Male</label>
+
+                <input type="radio" name="gender" id="female" value="Female" required>
+                <label for="female">Female</label>
+                <input type="radio" name="gender" id="others" value="Others" required>
+                <label for="others">Others</label>
+                <input type="email" name="email" class="form-control" placeholder="Email" required>
+
+                <input type="text" name="phone" class="form-control" placeholder="Phone" required>
+
+                <label for="profile_img">Upload your picture</label>
+                <input type="file" name="profile_img" id="profile_img" required>
+
+                <input name="password" class="form-control" type="text" placeholder="Password" required>
+
+                <button class="btn btn-block" type="submit">Signup</button>
+
+            </form>
+
+        </div>
+
+    </div>
+    <!-- alert message for sign in prompt -->
+    <div id="signinAlert_modal_container" class="modal_content hidden alert_modal_container">
+        <h2>Sign in / Register to add property.</h2>
+    </div>
+
+    {{!-- log out modal  --}}
+
+    <div id="logout_modal_container" class="modal_content hidden alert_modal_container">
+        <h2>Successfully logged out.</h2>
+        <p>Click anywhere to go to homepage.</p>
+    </div>
+
+    <!-- contact us modal  -->
+
+    <div class="modal_content hidden" id="contact_modal_container">
+        <div class="form px-4 pt-5">
+
+            <form action="/user/contactus" method="post" class="modal-form" id="contact_modal_form">
+                <div>
+                    <h2>Contact Us</h2>
+                </div>
+                <input type="text" name="name" class="form-control" placeholder="Name" required>
+
+                <input type="email" name="email" class="form-control" placeholder="Email" required>
+
+                <input type="text" name="phone" class="form-control" placeholder="Phone" required>
+                <textarea name="query" id="contactus_textarea" rows="5" placeholder="Write your query"
+                    class="form-control" required></textarea>
+
+                <button class="btn btn-block" type="submit">Contact Us</button>
+            </form>
+
+        </div>
+    </div>
+</div>

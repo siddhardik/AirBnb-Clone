@@ -1,0 +1,219 @@
+<div class="modal_container hidden">
+
+    <!-- signup modal -->
+    <div class="modal_content hidden" id="property_registration_modal_container">
+        <div class="form px-4">
+            <form action="/user/registerproperty" id="signup_form" method="post" class="modal-form"
+                enctype="multipart/form-data">
+                <div>
+                    <h2>Property Registration:-</h2>
+                </div><br>
+                <input type="text" name="propertyname" placeholder="Enter Property Name" class="form-control" required>
+                <label for="propertyType">Property type</label>
+                <select name="propertyType" class="form-control" required>
+                    <option value="" disabled selected>Please Select</option>
+                    <option value="Tiny Homes">Tiny Home</option>
+                    <option value="Cabins">Cabin</option>
+                    <option value="Beach Houses">Beach House</option>
+                    <option value="Countryside">Countryside</option>
+                    <option value="Shared Homes">Shared Home</option>
+                    <option value="Lake House">Lake House</option>
+                    <option value="Others">Others</option>
+                </select>
+                <input type="text" name="city" placeholder="City" class="form-control" required>
+                <input type="text" name="country" placeholder="Country" class="form-control" required>
+                <input type="text" name="price" placeholder="Enter price/night" class="form-control" required>
+                <input type="text" name="size" placeholder="Enter property area in sq.ft." class="form-control" required>
+                <input type="number" name="bedroom" placeholder="Number of bedroom available" class="form-control" required>
+                <input type="number" name="bathroom" placeholder="Number of bathrooms" class="form-control" required>
+                <input type="number" name="maxguests" placeholder="Maximum guest capacity" class="form-control" required>
+                <textarea name="description" rows="5" placeholder="Describe your property"
+                    class="form-control"></textarea>
+                <div id="amenities">
+                    <br><br>
+                    <h3 style="font-weight: bold;">Please check available amenities:-</h3>
+
+                    <div id="select-input-wrapper">
+                        <div class="select-container">
+                            <label for="parking">Parking</label>
+                            <select name="Parking" class="form-control">
+                                <option value="" disabled selected>Please Select</option>
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                            <label for="wifi">WiFi</label>
+                            <select name="wifi" class="form-control">
+                                <option value="" disabled selected>Please Select</option>
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                            <label for="breakfast">Breakfast included</label>
+                            <select name="breakfast" class="form-control">
+                                <option value="" disabled selected>Please Select</option>
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                            <label for="ac">Air Conditioning</label>
+                            <select name="ac" class="form-control">
+                                <option value="" disabled selected>Please Select</option>
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                            <label for="tv">Television</label>
+                            <select name="tv" class="form-control">
+                                <option value="" disabled selected>Please Select</option>
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                        </div>
+                        <div class="select-container">
+                            <label for="fridge">Fridge</label>
+                            <select name="fridge" class="form-control">
+                                <option value="" disabled selected>Please Select</option>
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                            <label for="laundry">Laundry</label>
+                            <select name="laundry" class="form-control">
+                                <option value="" disabled selected>Please Select</option>
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                            <label for="kitchen">Kitchen</label>
+                            <select name="kitchen" class="form-control">
+                                <option value="" disabled selected>Please Select</option>
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                            <label for="smokealarm">Smoke Alarm</label>
+                            <select name="smokealarm" class="form-control">
+                                <option value="" disabled selected>Please Select</option>
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                            <label for="pets">Pets allowed</label>
+                            <select name="pets" class="form-control">
+                                <option value="" disabled selected>Please Select</option>
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <br><br>
+                <label for="gallery_img">Upload min. five images</label>
+                <input type="file" name="gallery_img" class="form-control" multiple required><br>
+                <button class="btn btn-block" type="submit">Register Property</button>
+
+            </form>
+
+        </div>
+    </div>
+
+    {{!-- log out modal --}}
+
+    <div id="logout_modal_container" class="modal_content hidden alert_modal_container">
+        <h2>Successfully logged out.</h2>
+        <p>Click anywhere to go to homepage.</p>
+    </div>
+
+
+    {{!-- confirm modal  --}}
+
+    <div id="delete_property_modal_container" class="modal_content hidden">
+        <form action="/property/delete" method="post" id="delete-property-form">
+            <input type="number" name="propertyID" id="confirm-property-id" value="" class="hidden" required>
+            <label>Are you sure you wish to delete this property?</label>
+            <div class="abort-confirm-container">
+            <input type="button" value="Abort" class="btn btn-success abort-btn">
+            <input type="submit" value="Confirm" class="btn btn-danger" id="delete-property-confirm-btn">
+            </div>
+        </form>
+    </div>
+
+    <div id="cancel_booking_modal_container" class="modal_content hidden">
+        <form action="/user/booking/cancel" method="post" id="cancel-booking-form">
+            <input type="number" name="bookingID" id="confirm-booking-id" value="" class="hidden" required>
+            <label>Are you sure you wish to cancel this booking?</label>
+            <div class="abort-confirm-container">
+            <input type="reset" value="Abort" class="btn btn-success abort-btn">
+            <input type="submit" value="Confirm" class="btn btn-danger" id="cancel-confirm-btn">
+            </div>
+        </form>
+    </div>
+
+    <div id="delete_user_modal_container" class="modal_content hidden">
+        <form action="#" method="delete" >
+            <label for="password"><span class="text-danger">Warning - </span>This will delete your account permanently:</label><br>
+            <input type="password" placeholder="Confirm Password*" name="password" class="form-control" required>
+            <p class="text-danger hidden" id="delete-user-alert-div">Wrong Password !</p>
+            <br>
+            <div class="abort-confirm-container">
+            <input type="reset" value="Abort" class="btn btn-success abort-btn">
+            <input type="submit" value="Confirm" class="btn btn-danger" id="delete-user-confirm-btn">
+            </div>
+        </form>
+    </div>
+
+    {{!-- add review modal --}}
+    <div id="review_modal_container" class="modal_content hidden review_modal">
+        <div class="form px-4 pt-5">
+
+            <form action="/user/review" method="post" class="modal-form" id="review_modal_form">
+                <div>
+                    <h2 style="color: #fff;">Add review</h2>
+                </div>
+                <label for="rating">Rate Us<sup>*</sup>:</label>
+                <div id="star-icon-wrapper"><span class="material-symbols-outlined star">
+                        star
+                    </span><span class="material-symbols-outlined star">
+                        star
+                    </span><span class="material-symbols-outlined star">
+                        star
+                    </span><span class="material-symbols-outlined star">
+                        star
+                    </span><span class="material-symbols-outlined star">
+                        star
+                    </span></div>
+                <input type="number" name="rating" id="rating" value="" class="hidden" required>
+                <input type="number" name="bookingID" id="review_booking_id" value="" class="hidden" required>
+                <input type="number" name="propertyID" id="review_property_id" value="" class="hidden" required>
+                <input type="text" name="heading" class="form-control" placeholder="Add heading" required>
+                <label for="description">Your thoughts - </label>
+                <textarea name="description" id="review_textarea" rows="5" class="form-control" required></textarea>
+                <div class="abort-confirm-container">
+                <button type="reset" class="btn btn-danger" onclick="setStarColor()">Clear All</button>
+                <button class="btn btn-success" type="submit">Post Review</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+
+    <!-- contact us modal  -->
+
+    <div class="modal_content hidden" id="contact_modal_container">
+        <div class="form px-4 pt-5">
+
+            <form action="/user/contactus" method="post" class="modal-form" id="contact_modal_form">
+                <div>
+                    <h2 style="color: #fff;">Contact Us</h2>
+                </div>
+                <input type="text" name="name" class="form-control" placeholder="Name" required>
+
+                <input type="email" name="email" class="form-control" placeholder="Email" required>
+
+                <input type="text" name="phone" class="form-control" placeholder="Phone" required>
+                <label for="query">Write to us - </label>
+                <textarea name="query" id="contactus_textarea" rows="5" class="form-control"></textarea>
+
+                <button class="btn btn-block" type="submit">Contact Us</button>
+            </form>
+
+        </div>
+    </div>
+</div>

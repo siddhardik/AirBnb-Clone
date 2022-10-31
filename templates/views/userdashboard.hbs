@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Hello, world!</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"> -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+
+<body>
+
+    {{>dashboardmodal}}
+
+    <div class="container-fluid mb-2" id="header_container_wrapper">
+        <div class="row">
+            <div class="col-md-10 col-12 mx-auto rounded">
+                <!-- header section -->
+                <header id="header_container bg-light">
+                    <!-- top header part -->
+                    <div id="top_header">
+
+                        <div id="top_front_header"><span id="main_icon" class="material-symbols-outlined">
+                                home_app_logo
+                            </span><a href="http://localhost:3000/">
+                                <h2>airbnb</h2>
+                            </a></div>
+                        
+                            <div id="top_middle_header" class="dashboard-nav-links">
+                                <div><a href="#user-added-properties">Properties</a></div>
+                                <div><span>← </span><span>|</span><span> →</span></div>
+                                <div><a href="#user-bookings">Bookings</a></div>
+                            </div>
+                        <div id="top_end_header">
+                            <div id="host_div" data-name={{name}}>
+                                <a href="http://localhost:3000/user/#" id="user_info">
+                                    My Favourites
+                                </a>
+                            </div>
+                            <div id="dropdown_wrapper">
+
+                                <div id="dropdown_container">
+                                    <div id="top_header_dropdown_container"><span
+                                            class="material-symbols-outlined dropdown_icon">
+                                            menu
+                                        </span>
+                                        <span id="account_icon_wrapper" style="background-image:url('http://localhost:3000/fetchImage/{{img}}')">
+                                        </span>
+                                    </div>
+                                    <div id="dropdown_button_container" class="hidden">
+                                        <input type="button" value="My Favourites" class="header_dropdown_btn">
+                                        <input type="button" value="Register Home" class="header_dropdown_btn">
+                                        <input type="button" value="Log Out" class="header_dropdown_btn">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    
+                </header>
+            </div>
+        </div>
+    </div>
+
+        <div id="status_alert_container" class="hidden">
+        <h2 id="status-container">Status</h2>
+    </div>
+
+
+    <!-- main feed  -->
+    <div class="col-md-10 col-12 mx-auto" id="main_feed_container">
+        <div class="row" id="user_info_wrapper">
+            <div>
+                <h2><span><div id="user-dashboard-img" style="background-image: url('http://localhost:3000/fetchImage/{{img}}');"></div> Welcome, {{name}}</span> <button class="btn btn-danger" id="delete-acc-btn" onclick="openDeleteAccountModal()">Delete
+                        Account</button> </h2>
+            </div>
+            <div id="edit-account-form" class="sub-wrapper">
+                <h5><span>Edit Account Details-</span></h5>
+                <form action="/user/update" method="post" id="edit-form">
+                    <div>
+                        <label for="email" class="form-label">Change Email-id<button class="edit-btn"
+                                class="btn">Edit</button></label>
+                        <input type="email" id="change-email" name="email" class="form-control" disabled value=""
+                            placeholder="{{email}}">
+                    </div>
+                    <div>
+                        <label for="phone" class="form-label">Change Phone No.<button class="edit-btn"
+                                class="btn">Edit</button></label>
+                        <input type="text" name="phone" class="form-control" disabled value=""
+                            placeholder="{{phone}}">
+                    </div>
+                    <div>
+                        <label for="npassword" class="form-label" value="npassword">Change Password<button
+                                class="edit-btn" class="btn" value="npassword">Edit</button></label>
+                        <input type="password" name="npassword" class="form-control" id="npassword" disabled
+                            placeholder="Enter new password">
+                    </div>
+                    <div id="reenter-password" class="hidden">
+                        <label for="cpassword" class="form-label">Confirm New Password</label>
+                        <input type="password" id="rpassword" name="rpassword" class="form-control" disabled
+                            placeholder="Re-enter new password">
+                    </div>
+                    <div id="confirm-password" class="hidden">
+                        <label for="password" class="form-label"><span>Enter Password <sup>*</sup></span></label>
+                        <input type="password" name="password" id="confirmPassword" class="form-control"
+                            placeholder="Enter current password to confirm" required>
+                    </div>
+                    <button type="submit" class="btn hidden" id="submit-changes">Save Changes</button>
+                </form>
+            </div>
+
+            <div id="user-added-properties" class="sub-wrapper">
+                <h5><span>My properties-</span></h5>
+                <div class="no-data-container" id="no-property-div">
+                    No properties added. <span><button class="btn" id="add-property-btn" onclick="openRegistrationModal()">Click </button></span>to add
+                    property.
+                </div>
+                <div id="my-property-container" class="hidden"></div>
+            </div>
+
+            <div id="user-bookings" class="sub-wrapper">
+                <h5><span>My Bookings-</span></h5>
+                <div class="no-data-container" id="no-booking-div">
+                    No bookings yet.
+                </div>
+                <div id="my-bookings-container" class="hidden"></div>
+            </div>
+
+
+        </div>
+    </div>
+
+    {{>footer}}
+
+    <script src="/js/headerscript.js">
+    </script>
+    <script src="/js/userdashboardscript.js"></script>
+</body>
+
+</html>
