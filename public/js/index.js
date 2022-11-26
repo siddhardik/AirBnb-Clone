@@ -83,7 +83,7 @@ const renderPage = (data) => {
   } else {
     for (let i = 0; i < data.length; i++) {
       const newdata = `<div class="col-md-3 card mx-auto">
-                  <img src="http://localhost:3000/fetchImage/${
+                  <img src="${
                     data[i].images[Math.floor(Math.random() * 5)]
                   }" class="card-img-top" alt="img">
                   <div class="card-body">
@@ -136,25 +136,20 @@ const renderPage = (data) => {
 // fetch hotels
 const fetchData = async () => {
   try {
-    const url = "http://localhost:3000/property/all";
+    const url = "/property/all";
     const response = await fetch(url);
     let data = await response.json();
     console.log(data);
     document.querySelectorAll(".type-container").forEach((div) =>
-      div.addEventListener(
-        "click",
-        (e) => {
-          console.log(e.currentTarget.dataset.type);
-          const filterData = data.filter(
-            (item) => item.propertyType === e.currentTarget.dataset.type
-          );
-          console.log(filterData)
-          renderPage(filterData);
-        }
-      )
+      div.addEventListener("click", (e) => {
+        console.log(e.currentTarget.dataset.type);
+        const filterData = data.filter(
+          (item) => item.propertyType === e.currentTarget.dataset.type
+        );
+        console.log(filterData);
+        renderPage(filterData);
+      })
     );
-
-      
 
     renderPage(data);
   } catch {
@@ -171,7 +166,7 @@ const getPropertyById = (e) => {
     propertyID = e.target.value;
   }
   console.log(propertyID);
-  const url = `http://localhost:3000/property/id/${propertyID}`;
+  const url = `/property/id/${propertyID}`;
   window.location.href = url;
 };
 

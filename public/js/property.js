@@ -11,70 +11,74 @@ let bookBtn;
 let pricePerNight = 0;
 
 const addEventToBookingForm = () => {
-// function for calculating price and days 
+  // function for calculating price and days
   const calcBookingData = () => {
     // bookBtn.style.visibility = "hidden";
-    bookBtn.classList.add('hidden')
-      let date1 = new Date(checkInDiv.value);
-      let date2 = new Date(checkOutDiv.value);
-      let diff =
+    bookBtn.classList.add("hidden");
+    let date1 = new Date(checkInDiv.value);
+    let date2 = new Date(checkOutDiv.value);
+    let diff =
       Math.round(date2.getTime() - date1.getTime()) / (60 * 60 * 24 * 1000);
-      let rooms = noOfRooms.value;
-      console.log(typeof rooms)
-      if (rooms>=noOfRooms.min && rooms <= noOfRooms.max) {
-        noOfNights.value = diff;
+    let rooms = noOfRooms.value;
+    console.log(typeof rooms);
+    if (rooms >= noOfRooms.min && rooms <= noOfRooms.max) {
+      noOfNights.value = diff;
       totalPrice.value = diff * pricePerNight * rooms;
-      priceDiv.innerHTML =`<p><span>No of days:</span><span>${diff} Days</span></p>
+      priceDiv.innerHTML = `<p><span>No of days:</span><span>${diff} Days</span></p>
       <p><span>No. of rooms:</span><span>${rooms} Rooms</span></p>
       <p><span>Total price:</span><span>₹${
         diff * pricePerNight * rooms
       }</span></p>`;
-        // bookBtn.style.visibility = "visible";
-        bookBtn.classList.remove('hidden')
-      }
-      else if (rooms == "") {
-        priceDiv.innerHTML = ""
-      }
-      else if (rooms == 0) {
-        priceDiv.innerHTML = `<span id="book-form-alert" class="text-danger">Please select atleast 1 room.</span>`
-      }
-      else{
-        priceDiv.innerHTML = `<span id="book-form-alert" class="text-danger">Max rooms available is ${noOfRooms.max}.<br> Please enter again.</span>`
-      }
-  }
+      // bookBtn.style.visibility = "visible";
+      bookBtn.classList.remove("hidden");
+    } else if (rooms == "") {
+      priceDiv.innerHTML = "";
+    } else if (rooms == 0) {
+      priceDiv.innerHTML = `<span id="book-form-alert" class="text-danger">Please select atleast 1 room.</span>`;
+    } else {
+      priceDiv.innerHTML = `<span id="book-form-alert" class="text-danger">Max rooms available is ${noOfRooms.max}.<br> Please enter again.</span>`;
+    }
+  };
 
   // to set min check out date
-  checkInDiv.addEventListener('input',() => {
-    let tempDate = new Date(new Date(checkInDiv.value).getTime() + (60 * 60 * 24 * 1000)).toISOString().slice(0,10);
-    console.log(tempDate)
-    checkOutDiv.setAttribute('min',`${tempDate}`)
+  checkInDiv.addEventListener("input", () => {
+    let tempDate = new Date(
+      new Date(checkInDiv.value).getTime() + 60 * 60 * 24 * 1000
+    )
+      .toISOString()
+      .slice(0, 10);
+    console.log(tempDate);
+    checkOutDiv.setAttribute("min", `${tempDate}`);
     if (priceDiv.innerHTML !== "") {
       calcBookingData();
     }
-  })
-  // to set max check in date in case user inputs checkout date first 
-  checkOutDiv.addEventListener('input',() => {
-    let tempDate = new Date(new Date(checkOutDiv.value).getTime() - (60 * 60 * 24 * 1000)).toISOString().slice(0,10);
-    console.log(tempDate)
-    checkInDiv.setAttribute('max',`${tempDate}`)
+  });
+  // to set max check in date in case user inputs checkout date first
+  checkOutDiv.addEventListener("input", () => {
+    let tempDate = new Date(
+      new Date(checkOutDiv.value).getTime() - 60 * 60 * 24 * 1000
+    )
+      .toISOString()
+      .slice(0, 10);
+    console.log(tempDate);
+    checkInDiv.setAttribute("max", `${tempDate}`);
     if (priceDiv.innerHTML !== "") {
       calcBookingData();
     }
-  })
+  });
 
   noOfRooms.addEventListener("input", calcBookingData);
 };
 
-
 const expandReview = () => {
-  document.getElementById('reviews-container-wrapper').style.maxHeight = '100%';
-  toggleHide(document.getElementById("reviews-bottom-fade"))
-}
+  document.getElementById("reviews-container-wrapper").style.maxHeight = "100%";
+  toggleHide(document.getElementById("reviews-bottom-fade"));
+};
 
-// rendering property 
+// rendering property
 const fetchPropertyById = async () => {
   try {
-    const url = `http://localhost:3000/property/fetchproperty`;
+    const url = `/property/fetchproperty`;
     console.log(url);
     const response = await fetch(url);
     const data = await response.json();
@@ -135,18 +139,17 @@ const fetchPropertyById = async () => {
       return amenitiesNode;
     }
 
-    // show or hide faded div 
+    // show or hide faded div
     let showFadedBottom = false;
     const showFade = () => {
-      console.log(showFadedBottom)
+      console.log(showFadedBottom);
       if (showFadedBottom) {
         return "bottom-fade";
-      }
-      else{
+      } else {
         return "bottom-fade hidden";
       }
-    }
-    // render all reviews  
+    };
+    // render all reviews
     let userReviews = ``;
     function getReviews() {
       if (data.reviews == 0) {
@@ -158,10 +161,14 @@ const fetchPropertyById = async () => {
           userReviews += `<div class="single-review-wrapper">
               <div class="reviewer-details-wrapper">
                 <div>
-                  <div class="reviewer-img" style="background-image:url('http://localhost:3000/fetchImage/${review.reviewerImg}')"></div>
-                  <span>${review.reviewerName}</span><span>${new Date(review.reviewDate)
-                    .toGMTString()
-                    .slice(8, 16)}</span></div>
+                  <div class="reviewer-img" style="background-image:url('${
+                    review.reviewerImg
+                  }')"></div>
+                  <span>${review.reviewerName}</span><span>${new Date(
+            review.reviewDate
+          )
+            .toGMTString()
+            .slice(8, 16)}</span></div>
                   <div class="review-rating-container"><span class="star-icon material-symbols-outlined">star</span>
                       <span>${review.rating}</span>
                   </div>
@@ -184,11 +191,15 @@ const fetchPropertyById = async () => {
         bookingFormNode = `<input type="button" value="Sign in to book property" class="btn" id="book-signin-btn" onclick="showLoginPage()">`;
         return bookingFormNode;
       } else {
-        bookingFormNode = `<form action="http://localhost:3000/property/booking" method="post" id="booking-form">
+        bookingFormNode = `<form action="/property/booking" method="post" id="booking-form">
               <div class="mb-3" id="date-input-wrapper">
               <div>
               <label for="checkInDate" class="form-label">Check-in Date:</label><br>
-              <input type="date" class="form-control" id="checkInDate" name="checkInDate" max="" min="${new Date(Date.now()).toISOString().slice(0,10)}" required>
+              <input type="date" class="form-control" id="checkInDate" name="checkInDate" max="" min="${new Date(
+                Date.now()
+              )
+                .toISOString()
+                .slice(0, 10)}" required>
               </div>
               <div>
               <label for="checkOutDate" class="form-label">Check-out Date:</label><br>
@@ -197,13 +208,17 @@ const fetchPropertyById = async () => {
               </div>
               <div class="mb-3">
                 <label for="numberOfRooms" class="form-label">Number of rooms:</label>
-                <input type="number" class="form-control" id="numberOfRooms" name="numberOfRooms" placeholder="Max. room available is ${data.bedroom}" min="1" max="${data.bedroom}" required>
+                <input type="number" class="form-control" id="numberOfRooms" name="numberOfRooms" placeholder="Max. room available is ${
+                  data.bedroom
+                }" min="1" max="${data.bedroom}" required>
               </div>
               
               <div class="mb-3 hidden" id="bookingPrice">
               <input type="number" class="form-control" id="nights" name="nights">
               <input type="number" class="form-control" id="totalPrice" name="totalPrice">
-              <input type="number" class="form-control" name="propertyID" value="${data.propertyID}">
+              <input type="number" class="form-control" name="propertyID" value="${
+                data.propertyID
+              }">
               </div>
               <div class="mb-3">
                 <select class="form-select" aria-label="Default select example" name="paymentMethod" id="paymentMethod" required>
@@ -224,7 +239,9 @@ const fetchPropertyById = async () => {
     let childNode = `
             <div id="property-details-wrapper">
             <div class="row mb-3 gallery-wrapper">
-            <h2>${data.propertyName}<span class="material-symbols-outlined favourite-icon">
+            <h2>${
+              data.propertyName
+            }<span class="material-symbols-outlined favourite-icon">
             favorite
             </span></h2>
             <p>
@@ -243,22 +260,22 @@ const fetchPropertyById = async () => {
             </p>
             <div class="col-12 mx-auto gallery-main-img-container">
             <div>
-            <img src="http://localhost:3000/fetchImage/${
+            <img src="${
               data.images[0]
             }" alt="profile img" id="gallery_main_img">
             </div>
             <div class="gallery_img_wrapper">
             
-            <div class="gallery-img-container"><img class="gallery-img" src="http://localhost:3000/fetchImage/${
+            <div class="gallery-img-container"><img class="gallery-img" src="${
               data.images[1]
             }" alt="profile img"></div>
-            <div class="gallery-img-container"><img class="gallery-img" src="http://localhost:3000/fetchImage/${
+            <div class="gallery-img-container"><img class="gallery-img" src="${
               data.images[2]
             }" alt="profile img"></div>
-            <div class="gallery-img-container"><img class="gallery-img" src="http://localhost:3000/fetchImage/${
+            <div class="gallery-img-container"><img class="gallery-img" src="${
               data.images[3]
             }" alt="profile img"></div>
-            <div class="gallery-img-container"><img class="gallery-img" src="http://localhost:3000/fetchImage/${
+            <div class="gallery-img-container"><img class="gallery-img" src="${
               data.images[4]
             }" alt="profile img"></div>
             
@@ -327,8 +344,8 @@ const fetchPropertyById = async () => {
     priceDiv = document.getElementById("showPriceDays");
     noOfNights = document.querySelector("#nights");
     totalPrice = document.querySelector("#totalPrice");
-    bookBtn = document.getElementById('book-btn')
-      addEventToBookingForm();
+    bookBtn = document.getElementById("book-btn");
+    addEventToBookingForm();
   } catch (error) {
     console.log(error);
   }

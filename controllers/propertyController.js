@@ -31,7 +31,7 @@ const getAllProperty = (req, res) => {
 // 2
 const getPropertyById = async (req, res) => {
   const propertyById = await Property.findOne({ propertyID: parseInt(req.cookies.tempID)},{_id:0}).lean();
-  if (propertyById.userReviews !== null) {
+  if (propertyById.reviews !== 0) {
     propertyById.userReviews = await Review.find({propertyID:req.cookies.tempID},{_id:0,userID:0, reviewID:0});
   }
   res.clearCookie("tempID");

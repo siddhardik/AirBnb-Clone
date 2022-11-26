@@ -32,7 +32,7 @@
 
                         <div id="top_front_header"><span id="main_icon" class="material-symbols-outlined">
                                 home_app_logo
-                            </span><a href="http://localhost:3000/">
+                            </span><a href="/">
                                 <h2>airbnb</h2>
                             </a></div>
                         <div id="top_middle_header" onclick="toggleSearchContainer()">
@@ -83,10 +83,8 @@
                                         <span class="material-symbols-outlined" id="minus_icon" onclick="minusOne()">
                                             remove
                                         </span>
-                                        <input type="text" name="roomCount" id="room_count" placeholder="0"
-                                            value="0">
-                                            <span class="material-symbols-outlined" id="plus_icon"
-                                            onclick="plusOne()">
+                                        <input type="text" name="roomCount" id="room_count" placeholder="0" value="0">
+                                        <span class="material-symbols-outlined" id="plus_icon" onclick="plusOne()">
                                             add
                                         </span>
                                     </div>
@@ -94,38 +92,38 @@
                                 <div>
                                     <div>
 
-                                            <div><span>Price (Min - Max)</span></div>
+                                        <div><span>Price (Min - Max)</span></div>
                                         <div id="price-range">
-                                        <div>
-                                            {{!-- <label for="min">Min:</label> --}}
-                                            <input type="number" name="min-val" id="" placeholder="Min.">
-                                        </div>
-                                        <div><span>-</span></div>
-                                        <div>
-                                        {{!-- <div><label for="min">Min:</label> --}}
-                                            <input type="number" name="max-val" id="" placeholder="Max.">
-                                        </div>
-                                    </div>
+                                            <div>
+                                                {{!-- <label for="min">Min:</label> --}}
+                                                <input type="number" name="min-val" id="" placeholder="Min.">
+                                            </div>
+                                            <div><span>-</span></div>
+                                            <div>
+                                                {{!-- <div><label for="min">Min:</label> --}}
+                                                    <input type="number" name="max-val" id="" placeholder="Max.">
+                                                </div>
+                                            </div>
 
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label for="pet">Traveling with your pet?</label><br>
+                                        <div id="pet_radio_wrapper">
+                                            <input type="radio" name="pet" id="pet_yes" value="yes">
+                                            <label for="pet_yes">Yes</label>
+                                            <input type="radio" name="pet" id="pet_no" value="no">
+                                            <label for="pet_no">No</label>
+                                        </div>
                                     </div>
                                 </div>
-                                <div>
-                                    <label for="pet">Traveling with your pet?</label><br>
-                                    <div id="pet_radio_wrapper">
-                                        <input type="radio" name="pet" id="pet_yes" value="yes">
-                                    <label for="pet_yes">Yes</label>
-                                    <input type="radio" name="pet" id="pet_no" value="no">
-                                    <label for="pet_no">No</label>
-                                    </div>
+                                <div id="search">
+                                    <button type="submit" id="search_submit_btn"><span
+                                            class="material-symbols-outlined search_icon">
+                                            search
+                                        </span></button>
                                 </div>
                             </div>
-                            <div id="search">
-                                <button type="submit" id="search_submit_btn"><span
-                                        class="material-symbols-outlined search_icon">
-                                        search
-                                    </span></button>
-                            </div>
-                        </div>
 
                         </div>
                     </form>
@@ -144,7 +142,7 @@
             <div class="type-container" data-type="Beach houses"><span class="material-symbols-outlined">
                     surfing
                 </span><span>Beach House</span></div>
-                <div class="type-container" data-type="Cabins"><span class="material-symbols-outlined">
+            <div class="type-container" data-type="Cabins"><span class="material-symbols-outlined">
                     cabin
                 </span><span>Cabins</span></div>
             <div class="type-container" data-type="Countryside"><span class="material-symbols-outlined">

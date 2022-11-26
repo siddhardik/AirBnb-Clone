@@ -2,7 +2,7 @@ const editBtn = document.getElementsByClassName("edit-btn");
 const submitChange = document.getElementById("submit-changes");
 const myPropertyContainer = document.getElementById("my-property-container");
 const bookingsContainer = document.getElementById("my-bookings-container");
-const editForm = document.getElementById('edit-form');
+const editForm = document.getElementById("edit-form");
 const abort = document.getElementsByClassName("abort-btn");
 
 // abort button function
@@ -64,32 +64,36 @@ const setStarColor = () => {
     .forEach((star) => (star.style.color = "#41464b"));
 };
 const getPropertyById = (id) => {
-  const url = `http://localhost:3000/property/id/${id}`;
+  const url = `/property/id/${id}`;
   window.location.href = url;
 };
 
 // add review http call
 const showAlert = async function (e) {
   submitChange.innerHTML = "Submitting..";
-  submitChange.style.backgroundColor = 'gray';
+  submitChange.style.backgroundColor = "gray";
   e.preventDefault();
-  let submitBtn = document.getElementById('submit-changes')
-  let npassword = document.getElementById('npassword')
-  let rpassword = document.getElementById('rpassword')
-  if(!document.getElementById("reenter-password").classList.contains('hidden') && npassword.value !== rpassword.value) {
+  let submitBtn = document.getElementById("submit-changes");
+  let npassword = document.getElementById("npassword");
+  let rpassword = document.getElementById("rpassword");
+
+  if (
+    !document.getElementById("reenter-password").classList.contains("hidden") &&
+    npassword.value !== rpassword.value
+  ) {
     submitBtn.innerHTML = "Retry";
-      submitBtn.style.backgroundColor = 'red';
+    submitBtn.style.backgroundColor = "red";
     rpassword.value = "";
-    rpassword.classList.add('errorInputStyle');
-    rpassword.setAttribute('placeholder','Password do not match !');
-    setTimeout(()=>{
-      rpassword.classList.remove('errorInputStyle');
-      rpassword.setAttribute('placeholder','Re-enter new password');
-    },1800)
+    rpassword.classList.add("errorInputStyle");
+    rpassword.setAttribute("placeholder", "Password do not match !");
+    setTimeout(() => {
+      rpassword.classList.remove("errorInputStyle");
+      rpassword.setAttribute("placeholder", "Re-enter new password");
+    }, 1800);
     return;
   }
-  // NOTE:- FormData uses the same format a form uses while sending multipart/formdata 
-  //        so to send formdata as body either specify body as url-encoded string or pass a URLSearchParams object 
+  // NOTE:- FormData uses the same format a form uses while sending multipart/formdata
+  //        so to send formdata as body either specify body as url-encoded string or pass a URLSearchParams object
   const formData = new URLSearchParams(new FormData(editForm));
   // for (const item of data) {
   //   console.log(item[0],item[1])
@@ -101,36 +105,32 @@ const showAlert = async function (e) {
 
   console.log(response);
   const alertDiv = document.getElementById("status_alert_container");
-    const alertText = document.getElementById("status-container");
-    if (response.status === 200) {
-      submitBtn.style.backgroundColor = 'green';
-      submitBtn.innerHTML = 'Submitted';
-      alertText.innerHTML = "User information updated.";
-      alertDiv.style.backgroundColor = "#4BB543";
+  const alertText = document.getElementById("status-container");
+  if (response.status === 200) {
+    submitBtn.style.backgroundColor = "green";
+    submitBtn.innerHTML = "Submitted";
+    alertText.innerHTML = "User information updated.";
+    alertDiv.style.backgroundColor = "#4BB543";
+    toggleHide(alertDiv);
+    setTimeout(() => {
       toggleHide(alertDiv);
-      setTimeout(() => {
-        toggleHide(alertDiv);
-        window.location.reload(true);
-      }, 2000);
-    } else if(response.status === 401){
-      submitBtn.innerHTML = "Retry";
-      submitBtn.style.backgroundColor = 'red';
-      let ele = editForm.querySelector('#confirmPassword');
-      ele.value = "";
-      ele.setAttribute('placeholder','Wrong Password Entered !');
-      ele.classList.add('errorInputStyle');
-      setTimeout(()=>{
-        ele.classList.remove('errorInputStyle');
-        ele.setAttribute('placeholder','Enter current password to confirm');
-      }, 1800)
-    }
+      window.location.reload(true);
+    }, 2000);
+  } else if (response.status === 401) {
+    submitBtn.innerHTML = "Retry";
+    submitBtn.style.backgroundColor = "red";
+    let ele = editForm.querySelector("#confirmPassword");
+    ele.value = "";
+    ele.setAttribute("placeholder", "Wrong Password Entered !");
+    ele.classList.add("errorInputStyle");
+    setTimeout(() => {
+      ele.classList.remove("errorInputStyle");
+      ele.setAttribute("placeholder", "Enter current password to confirm");
+    }, 1800);
+  }
 };
 
-editForm.addEventListener('submit',showAlert);
-
-
-
-
+editForm.addEventListener("submit", showAlert);
 
 const cancelBookingFetch = async (e) => {
   e.preventDefault();
@@ -198,7 +198,7 @@ const deletePropertyFetch = async (e) => {
     const alertText = document.getElementById("status-container");
     if (response.status === 200) {
       toggleHide(document.getElementById("delete_property_modal_container"));
-    toggleHide(modal_container);
+      toggleHide(modal_container);
       alertText.innerHTML = "Property Removed Successfully.";
       alertDiv.style.backgroundColor = "#4BB543";
       toggleHide(alertDiv);
@@ -208,7 +208,7 @@ const deletePropertyFetch = async (e) => {
       }, 2000);
     } else {
       toggleHide(document.getElementById("delete_property_modal_container"));
-    toggleHide(modal_container);
+      toggleHide(modal_container);
       alertText.innerHTML = "Unsuccessfull. Please try again!";
       alertDiv.style.backgroundColor = "#ff385c";
       toggleHide(alertDiv);
@@ -291,30 +291,36 @@ const cancelBooking = (id) => {
 // function to get user proper and booking details
 const getDetails = async () => {
   try {
-    const url = `http://localhost:3000/user/details`;
+    const url = `/user/details`;
     const response = await fetch(url);
     const data = await response.json();
     console.log(data);
 
-    if (data.properties.length === 0 && !myPropertyContainer.classList.contains('hidden')) {
-      document.getElementById("no-property-div").classList.remove('hidden');
+    if (
+      data.properties.length === 0 &&
+      !myPropertyContainer.classList.contains("hidden")
+    ) {
+      document.getElementById("no-property-div").classList.remove("hidden");
       while (myPropertyContainer.firstChild) {
         myPropertyContainer.removeChild(myPropertyContainer.firstChild);
       }
-      myPropertyContainer.classList.add('hidden');
+      myPropertyContainer.classList.add("hidden");
     }
 
-    if (data.bookings.length === 0 && !bookingsContainer.classList.contains('hidden')) {
-      document.getElementById("no-property-div").classList.remove('hidden');
+    if (
+      data.bookings.length === 0 &&
+      !bookingsContainer.classList.contains("hidden")
+    ) {
+      document.getElementById("no-property-div").classList.remove("hidden");
       while (bookingsContainer.firstChild) {
         bookingsContainer.removeChild(bookingsContainer.firstChild);
       }
-      bookingsContainer.classList.add('hidden');
+      bookingsContainer.classList.add("hidden");
     }
 
     if (data.properties.length !== 0) {
-      document.getElementById("no-property-div").classList.add('hidden');
-      myPropertyContainer.classList.remove('hidden');
+      document.getElementById("no-property-div").classList.add("hidden");
+      myPropertyContainer.classList.remove("hidden");
       while (myPropertyContainer.firstChild) {
         myPropertyContainer.removeChild(myPropertyContainer.firstChild);
       }
@@ -323,9 +329,7 @@ const getDetails = async () => {
             <div class="card-body" onclick="getPropertyById(${
               property.propertyID
             })">
-            <img src="http://localhost:3000/fetchImage/${
-              property.image
-            }" class="card-img-top" alt="img">
+            <img src="${property.image}" class="card-img-top" alt="img">
                 <h5 class="card-title">${property.propertyName}</h5>
             </div>
             <ul class="list-group">
@@ -388,7 +392,7 @@ const getDetails = async () => {
       data.bookings.forEach((booking, i) => {
         const tempData = `<div class="booking-card">
                 <div>
-                <img src="http://localhost:3000/fetchImage/${booking.image}">
+                <img src="${booking.image}">
                 </div>
                 <div id="booking-details">
                 <p id="booking-header">${booking.propertyName}</p>

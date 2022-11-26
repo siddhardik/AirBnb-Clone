@@ -32,18 +32,18 @@
 
                         <div id="top_front_header"><span id="main_icon" class="material-symbols-outlined">
                                 home_app_logo
-                            </span><a href="http://localhost:3000/">
+                            </span><a href="/">
                                 <h2>airbnb</h2>
                             </a></div>
-                        
-                            <div id="top_middle_header" class="dashboard-nav-links">
-                                <div><a href="#user-added-properties">Properties</a></div>
-                                <div><span>← </span><span>|</span><span> →</span></div>
-                                <div><a href="#user-bookings">Bookings</a></div>
-                            </div>
+
+                        <div id="top_middle_header" class="dashboard-nav-links">
+                            <div><a href="#user-added-properties">Properties</a></div>
+                            <div><span>← </span><span>|</span><span> →</span></div>
+                            <div><a href="#user-bookings">Bookings</a></div>
+                        </div>
                         <div id="top_end_header">
                             <div id="host_div" data-name={{name}}>
-                                <a href="http://localhost:3000/user/#" id="user_info">
+                                <a href="/user/#" id="user_info">
                                     My Favourites
                                 </a>
                             </div>
@@ -54,7 +54,7 @@
                                             class="material-symbols-outlined dropdown_icon">
                                             menu
                                         </span>
-                                        <span id="account_icon_wrapper" style="background-image:url('http://localhost:3000/fetchImage/{{img}}')">
+                                        <span id="account_icon_wrapper" style="background-image:url({{img}})">
                                         </span>
                                     </div>
                                     <div id="dropdown_button_container" class="hidden">
@@ -67,13 +67,13 @@
                         </div>
 
                     </div>
-                    
+
                 </header>
             </div>
         </div>
     </div>
 
-        <div id="status_alert_container" class="hidden">
+    <div id="status_alert_container" class="hidden">
         <h2 id="status-container">Status</h2>
     </div>
 
@@ -82,7 +82,10 @@
     <div class="col-md-10 col-12 mx-auto" id="main_feed_container">
         <div class="row" id="user_info_wrapper">
             <div>
-                <h2><span><div id="user-dashboard-img" style="background-image: url('http://localhost:3000/fetchImage/{{img}}');"></div> Welcome, {{name}}</span> <button class="btn btn-danger" id="delete-acc-btn" onclick="openDeleteAccountModal()">Delete
+                <h2><span>
+                        <div id="user-dashboard-img" style="background-image: url({{img}});"></div>
+                        Welcome, {{name}}
+                    </span> <button class="btn btn-danger" id="delete-acc-btn" onclick="openDeleteAccountModal()">Delete
                         Account</button> </h2>
             </div>
             <div id="edit-account-form" class="sub-wrapper">
@@ -97,8 +100,7 @@
                     <div>
                         <label for="phone" class="form-label">Change Phone No.<button class="edit-btn"
                                 class="btn">Edit</button></label>
-                        <input type="text" name="phone" class="form-control" disabled value=""
-                            placeholder="{{phone}}">
+                        <input type="text" name="phone" class="form-control" disabled value="" placeholder="{{phone}}">
                     </div>
                     <div>
                         <label for="npassword" class="form-label" value="npassword">Change Password<button
@@ -123,7 +125,8 @@
             <div id="user-added-properties" class="sub-wrapper">
                 <h5><span>My properties-</span></h5>
                 <div class="no-data-container" id="no-property-div">
-                    No properties added. <span><button class="btn" id="add-property-btn" onclick="openRegistrationModal()">Click </button></span>to add
+                    No properties added. <span><button class="btn" id="add-property-btn"
+                            onclick="openRegistrationModal()">Click </button></span>to add
                     property.
                 </div>
                 <div id="my-property-container" class="hidden"></div>

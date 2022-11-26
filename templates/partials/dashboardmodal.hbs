@@ -23,10 +23,13 @@
                 <input type="text" name="city" placeholder="City" class="form-control" required>
                 <input type="text" name="country" placeholder="Country" class="form-control" required>
                 <input type="text" name="price" placeholder="Enter price/night" class="form-control" required>
-                <input type="text" name="size" placeholder="Enter property area in sq.ft." class="form-control" required>
-                <input type="number" name="bedroom" placeholder="Number of bedroom available" class="form-control" required>
+                <input type="text" name="size" placeholder="Enter property area in sq.ft." class="form-control"
+                    required>
+                <input type="number" name="bedroom" placeholder="Number of bedroom available" class="form-control"
+                    required>
                 <input type="number" name="bathroom" placeholder="Number of bathrooms" class="form-control" required>
-                <input type="number" name="maxguests" placeholder="Maximum guest capacity" class="form-control" required>
+                <input type="number" name="maxguests" placeholder="Maximum guest capacity" class="form-control"
+                    required>
                 <textarea name="description" rows="5" placeholder="Describe your property"
                     class="form-control"></textarea>
                 <div id="amenities">
@@ -121,15 +124,15 @@
     </div>
 
 
-    {{!-- confirm modal  --}}
+    {{!-- confirm modal --}}
 
     <div id="delete_property_modal_container" class="modal_content hidden">
         <form action="/property/delete" method="post" id="delete-property-form">
             <input type="number" name="propertyID" id="confirm-property-id" value="" class="hidden" required>
             <label>Are you sure you wish to delete this property?</label>
             <div class="abort-confirm-container">
-            <input type="button" value="Abort" class="btn btn-success abort-btn">
-            <input type="submit" value="Confirm" class="btn btn-danger" id="delete-property-confirm-btn">
+                <input type="button" value="Abort" class="btn btn-success abort-btn">
+                <input type="submit" value="Confirm" class="btn btn-danger" id="delete-property-confirm-btn">
             </div>
         </form>
     </div>
@@ -139,21 +142,22 @@
             <input type="number" name="bookingID" id="confirm-booking-id" value="" class="hidden" required>
             <label>Are you sure you wish to cancel this booking?</label>
             <div class="abort-confirm-container">
-            <input type="reset" value="Abort" class="btn btn-success abort-btn">
-            <input type="submit" value="Confirm" class="btn btn-danger" id="cancel-confirm-btn">
+                <input type="reset" value="Abort" class="btn btn-success abort-btn">
+                <input type="submit" value="Confirm" class="btn btn-danger" id="cancel-confirm-btn">
             </div>
         </form>
     </div>
 
     <div id="delete_user_modal_container" class="modal_content hidden">
-        <form action="#" method="delete" >
-            <label for="password"><span class="text-danger">Warning - </span>This will delete your account permanently:</label><br>
+        <form action="#" method="delete">
+            <label for="password"><span class="text-danger">Warning - </span>This will delete your account
+                permanently:</label><br>
             <input type="password" placeholder="Confirm Password*" name="password" class="form-control" required>
             <p class="text-danger hidden" id="delete-user-alert-div">Wrong Password !</p>
             <br>
             <div class="abort-confirm-container">
-            <input type="reset" value="Abort" class="btn btn-success abort-btn">
-            <input type="submit" value="Confirm" class="btn btn-danger" id="delete-user-confirm-btn">
+                <input type="reset" value="Abort" class="btn btn-success abort-btn">
+                <input type="submit" value="Confirm" class="btn btn-danger" id="delete-user-confirm-btn">
             </div>
         </form>
     </div>
@@ -185,8 +189,8 @@
                 <label for="description">Your thoughts - </label>
                 <textarea name="description" id="review_textarea" rows="5" class="form-control" required></textarea>
                 <div class="abort-confirm-container">
-                <button type="reset" class="btn btn-danger" onclick="setStarColor()">Clear All</button>
-                <button class="btn btn-success" type="submit">Post Review</button>
+                    <button type="reset" class="btn btn-danger" onclick="setStarColor()">Clear All</button>
+                    <button class="btn btn-success" type="submit">Post Review</button>
                 </div>
             </form>
 

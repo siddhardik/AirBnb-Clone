@@ -8,9 +8,11 @@
                 <div>
                     <h2 style="color: #fff;">Login to your account:-</h2>
                 </div>
-                <input type="text" name="username" class="form-control" placeholder="Username" autocomplete="off" required>
+                <input type="text" name="username" class="form-control" placeholder="Enter your Username"
+                    autocomplete="off" required>
 
-                <input type="password" name="password" class="form-control" placeholder="Password" required>
+                <input type="password" name="password" class="form-control" placeholder="Password" autocomplete="off"
+                    required>
                 <button class="btn" type="submit">Login</button>
             </form>
 
@@ -55,7 +57,8 @@
                 <label for="profile_img">Upload your picture</label>
                 <input type="file" name="profile_img" id="profile_img" required>
 
-                <input name="password" class="form-control" type="text" placeholder="Password" required>
+                <input name="password" class="form-control" type="text" placeholder="Password" autocomplete="off"
+                    required>
 
                 <button class="btn btn-block" type="submit">Signup</button>
 
@@ -69,7 +72,7 @@
         <h2>Sign in / Register to add property.</h2>
     </div>
 
-    {{!-- log out modal  --}}
+    {{!-- log out modal --}}
 
     <div id="logout_modal_container" class="modal_content hidden alert_modal_container">
         <h2>Successfully logged out.</h2>

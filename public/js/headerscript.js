@@ -21,7 +21,6 @@ const hostDiv = document.querySelector("#host_div");
 const contactUsModal = document.querySelector("#contact_modal_container");
 const contactBtn = document.querySelector("#contactBtn");
 
-
 const showContactModal = () => {
   toggleHide(modal_container);
   toggleHide(contactUsModal);
@@ -36,7 +35,7 @@ const toggleHide = (ele) => {
 
 contactBtn.addEventListener("click", showContactModal);
 
-Array.from(dropdownIcon.children).forEach(child =>{
+Array.from(dropdownIcon.children).forEach((child) => {
   child.addEventListener("click", () => {
     if (hostDiv.style.visibility === "hidden") {
       hostDiv.style.visibility = "visible";
@@ -45,9 +44,7 @@ Array.from(dropdownIcon.children).forEach(child =>{
     }
     toggleHide(dropdown_button_container);
   });
-})
-
-
+});
 
 // open sign in and other modals
 
@@ -63,7 +60,7 @@ const openModals = (e) => {
   }
   if (e.target.value === "My Account") {
     console.log("account");
-    window.location.href = `http://localhost:3000/user/account/${hostDiv.dataset.name}/dashboard`;
+    window.location.href = `/user/account/${hostDiv.dataset.name}/dashboard`;
   } else if (e.target.value === "Sign Up") {
     toggleHide(modal_container);
     toggleHide(signupModal);
@@ -76,7 +73,7 @@ const openModals = (e) => {
   } else if (e.target.value === "Log Out") {
     (async function () {
       try {
-        const url = "http://localhost:3000/user/logout";
+        const url = "/user/logout";
         const response = await fetch(url);
         const data = await response.json();
         console.log(data);
@@ -96,7 +93,7 @@ const openModals = (e) => {
 window.onclick = (e) => {
   if (e.target === modal_container) {
     if (!logoutAlertModal.classList.contains("hidden")) {
-      window.location.href = "http://localhost:3000/";
+      window.location.href = "/";
     }
     toggleHide(modal_container);
 

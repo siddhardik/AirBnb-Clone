@@ -34,19 +34,19 @@
 
                         <div id="top_front_header"><span id="main_icon" class="material-symbols-outlined">
                                 home_app_logo
-                            </span><a href="http://localhost:3000/">
+                            </span><a href="/">
                                 <h2>airbnb</h2>
                             </a></div>
-                       
-                            <div id="top_middle_header" class="dashboard-nav-links">
-                                <div><a href="#booking-form-wrapper">Reserve</a></div>
-                                <div><span>← </span><span>|</span><span> →</span></div>
-                                <div><a href="#reviews-container-wrapper">Reviews</a></div>
-                            </div>
+
+                        <div id="top_middle_header" class="dashboard-nav-links">
+                            <div><a href="#booking-form-wrapper">Reserve</a></div>
+                            <div><span>← </span><span>|</span><span> →</span></div>
+                            <div><a href="#reviews-container-wrapper">Reviews</a></div>
+                        </div>
 
                         <div id="top_end_header">
-                            <div id="host_div" data-name = {{name}}>
-                                <a href="http://localhost:3000/user/myaccount" id="user_info">
+                            <div id="host_div" data-name={{name}}>
+                                <a href="/user/myaccount" id="user_info">
                                     Hello, {{name}}
                                 </a>
                             </div>
@@ -57,7 +57,7 @@
                                             class="material-symbols-outlined dropdown_icon">
                                             menu
                                         </span>
-                                        <span id="account_icon_wrapper" style="background-image:url('http://localhost:3000/fetchImage/{{img}}')">
+                                        <span id="account_icon_wrapper" style="background-image:url({{img}})">
                                         </span>
                                     </div>
                                     <div id="dropdown_button_container" class="hidden">
@@ -70,7 +70,7 @@
                         </div>
 
                     </div>
-                    
+
                 </header>
             </div>
         </div>

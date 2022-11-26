@@ -3,6 +3,12 @@ require("dotenv").config();
 // imports
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const cloudinary = require("cloudinary");
+
+// requiring cloudinary config file here in order to run configuration files
+require("../middlewares/cloudinaryConfig");
+
+const { dataUri } = require("../middlewares/multerConfig");
 const { Collection, Schema } = require("mongoose");
 const {
   User,
@@ -18,6 +24,7 @@ const e = require("express");
 // 1
 const postUserSignup = async (req, res) => {
   try {
+    console.log(req.file);
     // let idCount = await User.count({});
     let tempId;
     // checking if number of documents inside Collection is 0
@@ -30,7 +37,13 @@ const postUserSignup = async (req, res) => {
     }
     // const salt = await bcrypt.genSalt()
 
-    const hashPassword = await bcrypt.hash(req.body.password, 15);
+    const file = await dataUri(req.file).content;
+    console.log(file);
+    const result = await cloudinary.v2.uploader.upload(file);
+    const imageUrl = await result.url;
+    console.log(result);
+
+    const hashPassword = await bcrypt.hash(req.body.password, 10);
     const user = new User({
       userID: tempId,
       userName: req.body.username,
@@ -44,7 +57,8 @@ const postUserSignup = async (req, res) => {
       country: req.body.country,
       city: req.body.city,
       gender: req.body.gender,
-      profilePicture: req.file.filename,
+      // profilePicture: req.file.filename,
+      profilePicture: imageUrl,
     });
     await user.save();
     const tokenData = {
@@ -53,16 +67,14 @@ const postUserSignup = async (req, res) => {
       userName: user.userName,
       fullName: user.fullName,
     };
-    const token = jwt.sign(tokenData, process.env.token_secret_key, {
-      // expiresIn: "15m",
-    });
+    const token = await jwt.sign(tokenData, process.env.token_secret_key);
     res.cookie("token", token, {
       httpOnly: true,
     });
     // res.status(201).send("user added in database");
     res.status(201).redirect(`/user/account/${user.userName}`);
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send("internal server err !");
   }
 };
 
@@ -104,55 +116,62 @@ const postUserLogin = (req, res) => {
 
 // 3
 const postProperty = async (req, res) => {
-  const images = req.files.map((index) => {
-    return index.filename;
-  });
-  let tempId;
-  if ((await Property.count({})) === 0) {
-    tempId = 1;
-  } else {
-    tempId = await Property.findOne().sort("-_id");
-    tempId = tempId.propertyID + 1;
-  }
-  const property = new Property({
-    propertyID: tempId,
-    userID: req.user.userID,
-    propertyName: req.body.propertyname,
-    propertyType: req.body.propertyType,
-    owner: req.user.fullName,
-    city: req.body.city,
-    country: req.body.country,
-    price: req.body.price,
-    size: req.body.size,
-    rating: "New",
-    reviews: 0,
-    // ownerImg:await User.findOne({userID:req.user.userID},{profilePicture:1}),
-    images: images,
-    bedroom: req.body.bedroom,
-    bathroom: req.body.bathroom,
-    maxGuests: req.body.maxguests,
-    description: req.body.description,
-    amenities: {
-      Parking: req.body.parking,
-      WiFi: req.body.wifi,
-      Breakfast: req.body.breakfast,
-      AC: req.body.ac,
-      TV: req.body.tv,
-      Fridge: req.body.fridge,
-      Laundry: req.body.laundry,
-      Kitchen: req.body.kitchen,
-      "Smoke Alarm": req.body.smokealarm,
-      "Pets Allowed": req.body.pets,
-    },
-  });
-  property.save((err, result) => {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log("property added");
+  let flag = false;
+  const imgArr = [];
+  req.files.forEach(async (img, ind, arr) => {
+    // console.log(img);
+    const file = await dataUri(img).content;
+    const result = await cloudinary.v2.uploader.upload(file);
+    imgArr.push(result.url);
+    if (imgArr.length === arr.length) {
+      // console.log(imgArr);
+
+      let tempId;
+      if ((await Property.count({})) === 0) {
+        tempId = 1;
+      } else {
+        tempId = await Property.findOne().sort("-_id");
+        tempId = tempId.propertyID + 1;
+      }
+      const property = new Property({
+        propertyID: tempId,
+        userID: req.user.userID,
+        propertyName: req.body.propertyname,
+        propertyType: req.body.propertyType,
+        owner: req.user.fullName,
+        city: req.body.city,
+        country: req.body.country,
+        price: req.body.price,
+        size: req.body.size,
+        rating: "New",
+        reviews: 0,
+        // ownerImg:await User.findOne({userID:req.user.userID},{profilePicture:1}),
+        images: imgArr,
+        bedroom: req.body.bedroom,
+        bathroom: req.body.bathroom,
+        maxGuests: req.body.maxguests,
+        description: req.body.description,
+        amenities: {
+          Parking: req.body.parking,
+          WiFi: req.body.wifi,
+          Breakfast: req.body.breakfast,
+          AC: req.body.ac,
+          TV: req.body.tv,
+          Fridge: req.body.fridge,
+          Laundry: req.body.laundry,
+          Kitchen: req.body.kitchen,
+          "Smoke Alarm": req.body.smokealarm,
+          "Pets Allowed": req.body.pets,
+        },
+      });
+      await property.save();
+      res.redirect(`../property/id/${property.propertyID}`);
     }
   });
-  res.redirect(`../property/id/${property.propertyID}`);
+
+  // const images = req.files.map((index) => {
+  //   return index.filename;
+  // });
 };
 
 // 4
@@ -353,15 +372,15 @@ const userUpdate = async (req, res) => {
           }
           await profile.save();
           // res.status(200).redirect(`./account/${req.user.userName}/dashboard`);
-          res.status(200).json({status:"updated"})
+          res.status(200).json({ status: "updated" });
         } else {
           // console.log(req.body);
-          res.status(401).json({ status: "wrong ps !" });
+          res.status(401).json({ status: "wrong password!" });
         }
       });
     }
   } catch (error) {
-    res.status(401).json({ status: "Unauthorised request !" });
+    res.status(500).json({ status: "Internal server error!" });
   }
 };
 
